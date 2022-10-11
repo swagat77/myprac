@@ -1,6 +1,9 @@
 package com.example.weatherapp;
 
+import com.google.gson.annotations.SerializedName;
+
 public class example {
+    @SerializedName("main")
     Main main;
 
     public Main getMain() {
