@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.DecimalFormat;
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -24,6 +25,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -84,14 +86,15 @@ TextView texts,text2;
                     Double speed=wind.getSpeed();
                     long rise=sys.getSunrise();
                     long set=sys.getSunset();
-                    Instant instant = Instant.ofEpochSecond(rise);
-                    Instant instant1 = Instant.ofEpochSecond(set);
+                    Instant instant = Instant.ofEpochSecond(rise-18000);
+                    Instant instant1 = Instant.ofEpochSecond(set-18000);
+
                     //ZoneId z=ZoneId.of("America/Texas");
                     //ZonedDateTime z=instant.atZone(z);
                     //String description= weather.getDescription();
-                    Double temperature =(double)(((temp - 273.15)));
+                    Double temperature =(double)((1.8*(temp - 273.15))+32);
                     String pattern="#.###";
-                    Double mintemp=(double)(((tempmin)));
+                    Double mintemp=(double)((1.8*(tempmin - 273.15))+32);
                     Double maxtemp= (double)((1.8*(tempmax - 273.15))+32);
                     DecimalFormat decimalFormat=new DecimalFormat(pattern);
                     String formatteddouble=decimalFormat.format(temperature);
@@ -99,10 +102,12 @@ TextView texts,text2;
                     String formatteddouble2=decimalFormat.format(humidity);
                     String formatteddouble3=decimalFormat.format(mintemp);
                     String formatteddouble4=decimalFormat.format(maxtemp);
-                    text.setText(String.valueOf((formatteddouble) + "° Fahrenheit"+"\n"+
-                            (formatteddouble1)+" \n"+formatteddouble2+"  humidity\n"+"min temp"
-                            +formatteddouble3+" k \nmax temp"+formatteddouble4+"F"+instant+instant1));
-                  texts.setText(String.valueOf(speed)+"mph");
+                    //SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd'T'HH-mm:ssZ");
+
+                    text.setText(String.valueOf("Current temp: "+(formatteddouble) + "° F"+"\nPressure:"+
+                            (formatteddouble1)+" hPa\n humidity:"+formatteddouble2+" % \n"+"min temp:"
+                            +formatteddouble3+"° F \nmax temp:"+formatteddouble4+"° F\nsunrise: "+instant+"\nsunset: "+instant1+"\nwind speed:"+(speed)+"mph"));
+                  //texts.setText(String.valueOf(speed)+"mph");
                 // text2.setText("sunrise is at"+String.valueOf((instant)));
 
                 }
