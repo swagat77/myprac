@@ -113,9 +113,6 @@ TextView texts,text2;
                 }
             }
 
-
-
-
             @Override
            public void onFailure(Call<example> call, Throwable t) { Toast.makeText(MainActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
 
